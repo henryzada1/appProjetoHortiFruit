@@ -5,7 +5,7 @@ import {Text, View, StyleSheet, ImageBackground } from 'react-native';
 export default function Home(){
   return (
     <View style={styles.container}>
-      <ImageBackground source={require=("../assets/HortiFruta.png")}>
+      <ImageBackground  style={styles.imagem} source={require('../assets/HortiFruta.png')}>
 
       </ImageBackground>
 
@@ -23,6 +23,8 @@ const styles = StyleSheet.create({
     },
 
     imagem:{
-        alignItems:'center',
+        flex:1,
+        width:400,
+        height:400
     }
   });
