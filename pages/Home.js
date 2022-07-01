@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
     imagem:{
         flex:1,
         width:400,
-        height:400
+          
     }
   });
