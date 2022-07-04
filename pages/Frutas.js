@@ -1,40 +1,42 @@
-import React,{ useState } from 'react';
+import React,{ useEffect , useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import {Text, View, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
+import Api from './Api';
 
 export default function Frutas(){
+const [nomeFruta,setNomeFruta] = useState([]);
+
+useEffect(() => {
+  Api.get('/hortifruit').then(response =>{
+    setNomeFruta(response.data);
+  });
+},[]);
+
   return (
     <View style={styles.container}>
+
       <Text style={styles.titulo}>Lista de Frutas</Text>
+
       <FlatList
-        data={frutas}
+        data={nomeFruta}
         renderItem={({item})=>
         <TouchableOpacity>
           <View style={styles.grupoFrutas}>
+
               <Text style={styles.textoBotaoFruta}>{item.fruta}</Text>
               <Text style={styles.textoBotaoValor}>{item.valor}</Text>
+
           </View>
         </TouchableOpacity>
+
         }
+
           />
       <StatusBar style="auto" />
     </View>
   );
 }
 
-
-const frutas =[
-  {
-    id: 1,
-    fruta: 'Banana',
-    valor: 'R$ 2,56'
-  },
-  {
-    id: 2,
-    fruta: 'Morango',
-    valor: 'R$ 9,38'
-  }
-]
 const styles = StyleSheet.create({
     container: {
       flex: 1,
