@@ -1,36 +1,42 @@
 import React,{ useEffect , useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {Text, View, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
-import Api from './Api';
+import {Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import Api from '../pages/Api';
 
 export default function Frutas(){
-const [nomeFruta,setNomeFruta] = useState([]);
 
-useEffect(() => {
-  Api.get('/hortifruit').then(response =>{
-    setNomeFruta(response.data);
-  });
+const [dadosFrutas,setdadosFrutas] = useState([]);
+
+async function getFrutas(){
+  try{
+    const resultado = await Api.get(`/hortifruit`);
+    return resultado.data
+    }catch(error){
+      console.log(error)
+      return[]
+  }
+}
+
+useEffect(async() => {
+  const resp = await getFrutas()
+  setdadosFrutas(resp);
 },[]);
 
   return (
     <View style={styles.container}>
 
       <Text style={styles.titulo}>Lista de Frutas</Text>
-
       <FlatList
-        data={nomeFruta}
+        data={dadosFrutas}
+        keyExtractor={dadosFrutas => dadosFrutas.id}
         renderItem={({item})=>
         <TouchableOpacity>
           <View style={styles.grupoFrutas}>
-
               <Text style={styles.textoBotaoFruta}>{item.fruta}</Text>
               <Text style={styles.textoBotaoValor}>{item.valor}</Text>
-
           </View>
         </TouchableOpacity>
-
         }
-
           />
       <StatusBar style="auto" />
     </View>
