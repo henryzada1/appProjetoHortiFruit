@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
-import { pesquisarNomeFruta } from '../pages/ModelFrutas'
+import { pesquisarNomeFruta } from './frutas/ModelFrutas'
 
 
 export default function Pesquisa(){
@@ -26,7 +26,7 @@ async function buscarFrutas(){
           placeholder='Procure sua fruta'
           style={styles.TextInput}
         />
-        <TouchableOpacity style={styles.botao} onPress={()=> pesquisarFruta()}>
+        <TouchableOpacity style={styles.botao} onPress={()=> pesquisarNomeFruta()}>
           <Text style={styles.textoBotao}>Pesquisar</Text>
         </TouchableOpacity>
 
@@ -44,7 +44,7 @@ const frutas = [
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: '#e9c46a',
       alignItems: 'center',
       justifyContent: 'center',
     },

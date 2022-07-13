@@ -1,24 +1,16 @@
 import React,{ useEffect , useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import Api from '../pages/Api';
+import {Text, View, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { buscarTodasFrutas } from '../frutas/ModelFrutas'
 
-export default function Frutas(){
+
+export default function ListarFruta({navigation}){
 
 const [dadosFrutas,setdadosFrutas] = useState([]);
 
-async function getFrutas(){
-  try{
-    const resultado = await Api.get(`/hortifruit`);
-    return resultado.data
-    }catch(error){
-      console.log(error)
-      return[]
-  }
-}
 
 useEffect(async() => {
-  const resp = await getFrutas()
+  const resp = await buscarTodasFrutas()
   setdadosFrutas(resp);
 },[]);
 
@@ -26,22 +18,31 @@ useEffect(async() => {
     <View style={styles.container}>
 
       <Text style={styles.titulo}>Lista de Frutas</Text>
+
+      <TouchableOpacity style={styles.botaoCadFruta} onPress={()=> navigation.navigate('Cadastrar')}>
+        <Text style={styles.botaoTextoCadFruta}>Cadastrar Fruta</Text>
+      </TouchableOpacity>
+    <StatusBar style="auto"/>
+
       <FlatList
         data={dadosFrutas}
         keyExtractor={dadosFrutas => dadosFrutas.id}
         renderItem={({item})=>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=> navigation.navigate('Alterar')}>
           <View style={styles.grupoFrutas}>
+
               <Text style={styles.textoBotaoFruta}>{item.fruta}</Text>
               <Text style={styles.textoBotaoValor}>{item.valor}</Text>
+
           </View>
         </TouchableOpacity>
+
         }
-          />
-      <StatusBar style="auto" />
+      />
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -51,7 +52,9 @@ const styles = StyleSheet.create({
     titulo:{
       fontSize:30,
       color:"#2a9d8f",
-      textAlign:'center'
+      textAlign:'center',
+      justifyContent:'center',
+      marginVertical:20
     },
     grupoFrutas:{
       backgroundColor:'#2a9d8f',
@@ -61,13 +64,19 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center'
     },
-    botaoFrutas:{
-
-    },
     textoBotaoFruta:{
       fontSize:20
     },
     textoBotaoValor:{
       fontSize:20
-    }
+    },  
+    botaoCadFruta:{
+      backgroundColor:'#2a9d8f',
+      margin: 15,
+      padding: 5,
+      borderRadius: 10
+    },
+    botaoTextoCadFruta:{
+      fontSize:18
+    },
   });

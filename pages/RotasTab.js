@@ -4,16 +4,16 @@ import { MaterialCommunityIcons} from '@expo/vector-icons';
 
 import Home from "./Home.js"
 import Pesquisa from "./Pesquisa.js"
-import Frutas from "./Frutas.js"
+import RotasButton from './RotasButton'
 
 const Tab = createBottomTabNavigator();
 
 export default function RotasTab(){
     return(
-        <Tab.Navigator initialRouteName="Home">
+        <Tab.Navigator initialRouteName="Home"  screenOptions={{headerShown:false}}>
             <Tab.Screen
             name="Frutas"
-            component={Frutas}
+            component={RotasButton}
             options={{
             tabBarIcon:({color,size})=><MaterialCommunityIcons name="basket-outline" color={color} size={size}/>}}    
             />
